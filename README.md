@@ -18,6 +18,27 @@ Click the button below to create a new Overleaf project using this template.
 - Figure and table placeholders
 - IEEE bibliography
 - Optional title page, table of contents and references
+- Reusable NAOMI table style with a dark header, alternating row colors, and readable text alignment
+
+## Tables
+
+Use `\tableplaceholder{Caption}{label}` for the ready-made three-column example. For custom content, use the `naomitable` environment and the `L{width}` and `Y` column types:
+
+```latex
+\begin{naomitable}{Verification levels}{tab:verification}
+    \begin{tabularx}{\textwidth}{L{2.8cm} L{3.5cm} Y}
+        \rowcolor{naomiTableHeader}
+        \textcolor{white}{\bfseries Level} &
+        \textcolor{white}{\bfseries When} &
+        \textcolor{white}{\bfseries Evidence} \\
+        Static checks & Every PR & Lint and configuration validation \\
+        Unit tests & Behaviour changes & Automated test results \\
+        \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+    \end{tabularx}
+\end{naomitable}
+```
+
+`L{width}` is a fixed-width, left-aligned column. `Y` uses the remaining width and aligns text to the left. The environment applies the caption, row spacing, and alternating colors.
 
 ## Configuration
 
