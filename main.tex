@@ -61,7 +61,7 @@
 \usepackage{lmodern}
 
 \usepackage{graphicx}
-\usepackage{xcolor}
+\usepackage[table]{xcolor}
 \usepackage{fancyhdr}
 \usepackage{titlesec}
 \usepackage{setspace}
@@ -95,6 +95,13 @@
 \definecolor{secondary}{HTML}{000000}
 \definecolor{muted}{HTML}{000000}
 \definecolor{linecolor}{HTML}{000000}
+\definecolor{naomiTableHeader}{HTML}{17445A}
+\definecolor{naomiTableStripe}{HTML}{EDF7FA}
+\definecolor{naomiTableRule}{HTML}{66BBD0}
+
+% Ragged-right columns keep narrow table cells readable.
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 
 
 % ==================================================
@@ -386,47 +393,50 @@
 
 
 % ==================================================
-% 9. TABLE PLACEHOLDER
+% 9. TABLES
 % ==================================================
+
+% Usage:
+% \begin{naomitable}{Caption}{label}
+%     \begin{tabularx}{\textwidth}{L{2.8cm} Y L{2.6cm}}
+%         \rowcolor{naomiTableHeader}
+%         \textcolor{white}{\bfseries Name} & ... \\
+%         ...
+%         \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
+%     \end{tabularx}
+% \end{naomitable}
+
+\newenvironment{naomitable}[2]{%
+    \begin{table}[htbp]
+        \centering
+        \caption{#1}
+        \label{#2}
+        \begingroup
+        \small
+        \renewcommand{\arraystretch}{1.4}
+        \setlength{\tabcolsep}{7pt}
+        \rowcolors{2}{naomiTableStripe}{white}
+}{%
+        \endgroup
+    \end{table}
+}
 
 % Usage:
 % \tableplaceholder{Caption}{label}
 
 \newcommand{\tableplaceholder}[2]{
-
-    \begin{table}[H]
-        \centering
-
-        \caption{#1}
-        \label{#2}
-
-        \begin{tabularx}{0.9\textwidth}{l X c}
-
-            \toprule
-
-            \textbf{Name} &
-            \textbf{Description} &
-            \textbf{Status} \\
-
-            \midrule
-
-            Item A &
-            Sample description &
-            Completed \\
-
-            Item B &
-            Sample description &
-            In Progress \\
-
-            Item C &
-            Sample description &
-            Planned \\
-
-            \bottomrule
-
+    \begin{naomitable}{#1}{#2}
+        \begin{tabularx}{\textwidth}{L{2.8cm} Y L{2.6cm}}
+            \rowcolor{naomiTableHeader}
+            \textcolor{white}{\bfseries Name} &
+            \textcolor{white}{\bfseries Description} &
+            \textcolor{white}{\bfseries Status} \\
+            Item A & Sample description & Completed \\
+            Item B & Sample description & In Progress \\
+            Item C & Sample description & Planned \\
+            \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
         \end{tabularx}
-
-    \end{table}
+    \end{naomitable}
 }
 
 
@@ -513,42 +523,18 @@
 
 \subsection{Custom Table}
 
-\begin{table}[H]
-
-    \centering
-
-    \caption{Team Task Distribution}
-    \label{tab:tasks}
-
-    \begin{tabularx}{\textwidth}{
-        l X c
-    }
-
-        \toprule
-
-        \textbf{Member} &
-        \textbf{Task} &
-        \textbf{Status} \\
-
-        \midrule
-
-        Member 1 &
-        Requirements Analysis &
-        Completed \\
-
-        Member 2 &
-        System Architecture &
-        In Progress \\
-
-        Member 3 &
-        Implementation &
-        Planned \\
-
-        \bottomrule
-
+\begin{naomitable}{Team Task Distribution}{tab:tasks}
+    \begin{tabularx}{\textwidth}{L{2.8cm} Y L{2.6cm}}
+        \rowcolor{naomiTableHeader}
+        \textcolor{white}{\bfseries Member} &
+        \textcolor{white}{\bfseries Task} &
+        \textcolor{white}{\bfseries Status} \\
+        Member 1 & Requirements Analysis & Completed \\
+        Member 2 & System Architecture & In Progress \\
+        Member 3 & Implementation & Planned \\
+        \arrayrulecolor{naomiTableRule}\bottomrule[1pt]
     \end{tabularx}
-
-\end{table}
+\end{naomitable}
 
 
 % ==================================================
